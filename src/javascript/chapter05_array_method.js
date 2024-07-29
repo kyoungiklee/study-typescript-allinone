@@ -212,5 +212,8 @@ const item11 = () => {
   let names = 'Bilbo, Gandalf, Nazgul';
   let arr = names.split(",");
   console.log(tag, arr);
+
+  arr = names.split(",", 2);
+  console.log(tag, arr);
 };
 item11();
