@@ -75,18 +75,14 @@ const item03 = () => {
 
   arr = [1, 2];
   let arrayLike = {
-    0: "something",
-    length: 1,
+    0: "something", length: 1,
   }
   const numbers4 = arr.concat(arrayLike);
   console.log(tag, numbers4);
 
   arr = [1, 2];
   arrayLike = {
-    0: "something",
-    1: "else",
-    [Symbol.isConcatSpreadable]: true,
-    length: 2,
+    0: "something", 1: "else", [Symbol.isConcatSpreadable]: true, length: 2,
   }
 
   const numbers5 = arr.concat(arrayLike);
@@ -112,7 +108,7 @@ const item05 = () => {
   // arr.indexOf(item, from)는 인덱스 from부터 시작해 item(요소)을 찾습니다.
   // 요소를 발견하면 해당 요소의 인덱스를 반환하고, 발견하지 못했으면 -1을 반환합니다.
 
-  let arr = [1, false,0];
+  let arr = [1, false, 0];
   console.log(tag, arr.indexOf(0));
 
   // arr.lastIndexOf(item, from)는 위 메서드와 동일한 기능을 하는데, 검색을 끝에서부터 시작한다는 점만 다릅니다.
@@ -132,11 +128,7 @@ item05();
 const item06 = () => {
   const tag = "item06";
 
-  let users = [
-    {id: 1, name: "John"},
-    {id: 2, name: "Pete"},
-    {id: 3, name: "Mary"}
-  ];
+  let users = [{id: 1, name: "John"}, {id: 2, name: "Pete"}, {id: 3, name: "Mary"}];
 
   // 실무에서 객체로 구성된 배열을 다뤄야 할 일이 잦기 때문에 find 메서드 활용법을 알아두면 좋습니다.
   let user = users.find(item => item.id === 1);
@@ -149,11 +141,7 @@ item06();
 const item07 = () => {
   const tag = "item07";
 
-  let users = [
-    {id: 1, name: "John"},
-    {id: 2, name: "Pete"},
-    {id: 3, name: "Mary"}
-  ];
+  let users = [{id: 1, name: "John"}, {id: 2, name: "Pete"}, {id: 3, name: "Mary"}];
 
   const filter = users.filter(item => item.id < 3);
   console.log(tag, filter);
@@ -165,11 +153,7 @@ item07();
 // map
 const item08 = () => {
   const tag = "item08";
-  let actors = [
-    "Bilbo",
-    "Gandalf",
-    "Nazgul",
-  ];
+  let actors = ["Bilbo", "Gandalf", "Nazgul",];
 
   const map = actors.map(item => item.length);
   console.log(tag, map);
@@ -180,10 +164,10 @@ item08();
 const item09 = () => {
   const tag = "item09";
   let arr = [1, 2, 15];
-  const numbers = arr.sort((a,b) => {
-    if(a > b) return 1;
-    if(a === b) return 0;
-    if(a < b) return -1;
+  const numbers = arr.sort((a, b) => {
+    if (a > b) return 1;
+    if (a === b) return 0;
+    if (a < b) return -1;
   });
   console.log(tag, numbers);
 
@@ -215,5 +199,91 @@ const item11 = () => {
 
   arr = names.split(",", 2);
   console.log(tag, arr);
+
+  arr = names.split(",");
+  const arrJoin = arr.join(";");
+  console.log(tag, arrJoin);
+  const strings = arrJoin.split(";");
+  console.log(tag, strings);
 };
 item11();
+
+// reduce, reduceRight
+// reduce와 reduceRight는 배열을 기반으로 값 하나를 도출할 때 사용됩니다
+// let value = arr.reduce(function(accumulator, item, index, array) {
+//   // ...
+// }, [initial]);
+const item12 = () => {
+  const tag = "item12";
+
+  let arr = [1, 2, 3, 4, 5,];
+  let result = arr.reduce((sum, current) => {
+    return sum + current
+  }, 0);
+  console.log(tag, result);
+
+  //초깃값을 없애도 결과는 동일하네요. 초깃값이 없으면 reduce는 배열의 첫 번째 요소를 초깃값으로 사용하고
+  // 두 번째 요소부터 함수를 호출하기 때문입니다.
+  result = arr.reduce((sum, current) => {
+    return sum + current;
+  })
+  console.log(tag, result);
+
+};
+item12();
+
+// Array.isArray로 배열여부 알아내기
+const item13 = () => {
+  const tag = "item13";
+
+  console.log(tag, Array.isArray({}));
+  console.log(tag, Array.isArray([]));
+}
+item13();
+
+// 배열 메서드와 thisArgs
+const item14 = () => {
+  const tag = "item14";
+  let army = {
+    minAge: 18, maxAge: 27, canJoin(user) {
+      return user.age >= this.minAge && user.age < this.maxAge;
+    }
+  };
+
+  let users = [{age: 16}, {age: 20}, {age: 23}, {age: 30}];
+
+  let soldiers = users.filter(army.canJoin, army);
+  console.log(tag, soldiers);
+
+
+};
+item14();
+
+// some, evey, fill copyWithin
+const item15 = () => {
+  const tag = "item15";
+  let arr = [1, 2, 3, 4, 5,];
+  let users = [{age: 16}, {age: 20}, {age: 23}, {age: 30}];
+  // some은 함수의 반환 값을 true로 만드는 요소가 하나라도 있는지 여부를 확인하고
+  // every는 모든 요소가 함수의 반환 값을 true로 만드는지 여부를 확인합니다.
+  console.log(tag, users.every(user => user.age > 15));
+  console.log(tag, users.some(user => user.age >= 30));
+
+  // arr.fill(value, start, end)은 start부터 end까지 value를 채워 넣습니다
+  arr.fill(10000, 0, arr.length);
+  console.log(tag, arr);
+
+  let array1 = ['a', 'b', 'c', 'd', 'e'];
+
+// Copy to index 0 the element at index 3
+  console.log(array1.copyWithin(0, 3, 4));
+// Expected output: Array ["d", "b", "c", "d", "e"]
+
+// Copy to index 1 all elements from index 3 to the end
+  console.log(array1.copyWithin(1, 3));
+// Expected output: Array ["d", "d", "e", "d", "e"]
+
+}
+item15();
+
+
