@@ -164,10 +164,5 @@ const item07 = () => {
 };
 item07();
 
-const item08 = () => {
-  const tag = "item08";
-
-};
-item08();
 
 
